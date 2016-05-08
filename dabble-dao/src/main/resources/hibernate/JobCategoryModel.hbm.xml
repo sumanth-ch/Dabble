@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.fourvector.apps.dabble.model.job.JobCategoryModel"
+		table="job_category">
+		<id column="ID_JOB_category" name="id">
+			<generator class="identity" />
+		</id>
+
+		<property name="description" />
+		<property name="name" />
+
+		<many-to-one name="parent" column="parent_category_id" fetch="select"
+			class="com.fourvector.apps.dabble.model.job.JobCategoryModel"
+			cascade="none" />
+
+	</class>
+</hibernate-mapping>

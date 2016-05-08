@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+
+		<!-- <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property> 
+			<property name="connection.url">jdbc:mysql://localhost:3306/testdb</property> 
+			<property name="connection.username">root</property> <property name="connection.password">root</property> 
+			<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property> -->
+		<!-- <property name="hbm2ddl.auto">update</property> -->
+
+		<property name="default_batch_fetch_size">10</property>
+		<property name="cache.use_second_level_cache">false</property>
+		<property name="cache.use_minimal_puts">true</property>
+		<property name="net.sf.ehcache.configurationResourceName">classpath:ehcache.xml</property>
+		<property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
+
+		<mapping resource="hibernate/BidModel.hbm.xml" />
+		<mapping resource="hibernate/JobCategoryModel.hbm.xml" />
+		<mapping resource="hibernate/JobDetailModel.hbm.xml" />
+		<mapping resource="hibernate/JobModel.hbm.xml" />
+		<mapping resource="hibernate/PaymentTypeModel.hbm.xml" />
+		<!-- <mapping resource="hibernate/PricingQuotaModel.hbm.xml" /> -->
+		<mapping resource="hibernate/TransactionDetailModel.hbm.xml" />
+		<mapping resource="hibernate/TransactionModel.hbm.xml" />
+		<mapping resource="hibernate/UserAddressModel.hbm.xml" />
+		<mapping resource="hibernate/UserCredentialModel.hbm.xml" />
+		<mapping resource="hibernate/UserEmailModel.hbm.xml" />
+		<mapping resource="hibernate/UserModel.hbm.xml" />
+		<mapping resource="hibernate/UserPhoneModel.hbm.xml" />
+		<mapping resource="hibernate/UserRatingModel.hbm.xml" />
+		<mapping resource="hibernate/UserFavouriteCategoryModel.hbm.xml" />
+		<mapping resource="hibernate/VerificationKeyModel.hbm.xml" />
+		<!-- <mapping resource="hibernate/TempKeyModel.hbm.xml" /> -->
+		<mapping resource="hibernate/DeviceTokenModel.hbm.xml" />
+		<mapping resource="hibernate/UserSubscriptionModel.hbm.xml" />
+		<mapping resource="hibernate/SubscriptionModel.hbm.xml" />
+
+		<listener type="pre-insert"
+			class="com.fourvector.apps.dabble.dao.config.DabbleAuditListener" />
+		<listener type="pre-update"
+			class="com.fourvector.apps.dabble.dao.config.DabbleAuditListener" />
+	</session-factory>
+</hibernate-configuration>

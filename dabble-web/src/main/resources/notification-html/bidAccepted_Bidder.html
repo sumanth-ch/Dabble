@@ -1,0 +1,41 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+.user_name {
+	font-size: 2em;
+	font-weight: bold;
+}
+
+body {
+	color: #424242;
+}
+
+.boldText {
+	font-weight: bold;
+}
+</style>
+</head>
+<body>
+	<div class="user_name">Dear ${user-name}</div>
+	<P>
+		Your bid has been accepted by the job poster<br /> Below are your bid
+		details
+	</P>
+
+	Your Bid reference is :
+	<span class="boldText">${bid-id}</span>
+	<br /> Order Your bid amount is :
+	<span class="boldText">USD ${bid-value}</span>
+	<br /> You bid for job
+	<span class="boldText">${job-title}</span>
+	<br/>
+	<p>
+		We hope you to have a wonderful experience with Dabble.<br /> We
+		appreciate your suggestions and ideas.
+	</p>
+
+	Please send us your feedback to
+	<a href="mailto:support@dabble.com">support@dabble.com</a>
+</body>
+</html>

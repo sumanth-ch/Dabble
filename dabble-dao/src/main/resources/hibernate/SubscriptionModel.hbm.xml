@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.fourvector.apps.dabble.model.payment.SubscriptionModel"
+		table="subscription">
+		<id column="id_subscription" name="id">
+			<generator class="identity" />
+		</id>
+
+		<property name="name" />
+		<property name="description" />
+		<property name="bidderExcempt" column="is_bidder_excempt" />
+		<property name="durationInDays" column="duration_in_days" />
+		<property name="maxBidCount" column="max_bids" />
+		<property name="maxJobCount" column="max_jobs" />
+		<property name="amountForCreateJob" column="amount_for_create_job" />
+		<property name="amountForCreateEvent" column="amount_for_create_event" />
+		<property name="amountForAcceptBid" column="amount_for_accept_bid" />
+		<property name="amountForAcceptEvent" column="amount_for_accept_event" />
+		<property name="amountForSubscription" column="amount_for_subscription" />
+		<property name="subscriptionType" column="subscription_type" />
+		<property name="planReference" column="plan_reference_code" />
+		<property name="status" />
+		<property name="userTypeCode" column="user_type_code" />
+
+	</class>
+</hibernate-mapping>

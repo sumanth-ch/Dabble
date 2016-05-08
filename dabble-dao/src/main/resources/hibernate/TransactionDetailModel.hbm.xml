@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class
+		name="com.fourvector.apps.dabble.model.payment.TransactionDetailModel"
+		table="transaction_details">
+		<id column="id_transaction_detail" name="id">
+			<generator class="identity" />
+		</id>
+		<property name="amount" />
+		<property name="transactionReference" column="str_transaction_code" />
+		<property name="currency" />
+		<property name="createdOn" column="date_created" update="false" />
+
+
+		<many-to-one name="transaction" column="transaction_id"
+			update="false" fetch="select"
+			class="com.fourvector.apps.dabble.model.payment.TransactionModel" />
+
+<!-- 		<many-to-one name="job" unique="true" column="job_id"
+			fetch="select" class="com.fourvector.apps.dabble.model.job.JobModel"
+			cascade="none" />
+ -->		<many-to-one name="transactingUser" column="user_id"
+			fetch="select" class="com.fourvector.apps.dabble.model.user.UserModel"
+			cascade="none" />
+
+	</class>
+</hibernate-mapping>

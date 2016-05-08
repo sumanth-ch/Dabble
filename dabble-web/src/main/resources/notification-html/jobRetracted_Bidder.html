@@ -1,0 +1,40 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+.user_name {
+	font-size: 2em;
+	font-weight: bold;
+}
+
+body {
+	color: #424242;
+}
+
+.boldText {
+	font-weight: bold;
+}
+</style>
+</head> 
+<body>
+	<div class="user_name">Dear ${user-name}</div>
+	<P>
+		A job you had bid on has been retracted.<br /> Below are the
+		details
+	</P>
+
+	Job reference is :
+	<span class="boldText">${job-id}</span>
+	<br /> Job title is :
+	<span class="boldText">${job-title}</span>.
+	<br /> Your bid value was :
+	<span class="boldText">USD ${bid-value}</span>
+	<p>
+		We hope you to have a wonderful experience with Dabble.<br /> We
+		appreciate your suggestions and ideas.
+	</p>
+
+	Please send us your feedback to
+	<a href="mailto:support@dabble.com">support@dabble.com</a>
+</body>
+</html>

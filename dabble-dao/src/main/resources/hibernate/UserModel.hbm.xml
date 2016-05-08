@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.fourvector.apps.dabble.model.user.UserModel"
+		table="user">
+		<cache usage="read-write" />
+		<id column="ID_USER" name="id">
+			<generator class="identity" />
+		</id>
+		<property name="firstName" />
+		<property name="middleName" />
+		<property name="lastName" />
+		<!-- <property name="deviceToken" column="device_token" /> -->
+		<property name="gender" />
+		<property name="dob" />
+		<property name="aboutMe" column="about_me" />
+		<property name="age" />
+		<property name="photoUrl" />
+		<property name="status" />
+		<property name="timezone" />
+		<property name="braintreeReference" column="braintree_reference" />
+		<property name="userTypeCode" column="user_type_code" />
+
+		<set name="emails" where="status=0" fetch="join">
+			<key column="USER_ID" />
+			<one-to-many class="com.fourvector.apps.dabble.model.user.UserEmailModel" />
+		</set>
+		<set name="phones" where="status=0" fetch="select">
+			<key column="USER_ID" />
+			<one-to-many class="com.fourvector.apps.dabble.model.user.UserPhoneModel" />
+		</set>
+
+
+
+	</class>
+</hibernate-mapping>

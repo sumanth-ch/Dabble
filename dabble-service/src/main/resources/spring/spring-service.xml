@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:jms="http://www.springframework.org/schema/jms"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                            http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-4.0.xsd
+                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+	<context:property-placeholder location="classpath:config.properties" />
+	<import resource="classpath:spring/spring-dao.xml" />
+	<import resource="classpath:spring/spring-dao-config.xml" />
+	<import resource="classpath:spring/spring-notification-service.xml" />
+
+	<bean id="userService" class="com.fourvector.apps.dabble.service.impl.UserService">
+		<property name="userDAO" ref="userDAO" />
+		<property name="paymentService" ref="paymentService" />
+		<property name="imageStoreLocation" value="${profile.image.store.path}" />
+		<property name="verificationLink" value="${user.verification.url}" />
+	</bean>
+
+	<bean id="clientService" class="com.fourvector.apps.dabble.service.impl.ClientService">
+		<property name="clientDAO" ref="clientDAO" />
+	</bean>
+
+	<bean id="chatService" class="com.fourvector.apps.dabble.service.impl.ChatService">
+		<property name="mongoDAO" ref="mongoDAO" />
+		<property name="jmsTemplate" ref="jmsTemplate" />
+		<property name="userDAO" ref="userDAO" />
+	</bean>
+
+	<bean id="jobService" class="com.fourvector.apps.dabble.service.impl.JobService">
+		<property name="jobDAO" ref="jobDAO" />
+		<property name="imageStoreLocation" value="${job.image.store.path}" />
+		<property name="videoStoreLocation" value="${job.video.store.path}" />
+		<property name="paymentService" ref="paymentService" />
+		<property name="audioStoreLocation" value="${job.audio.store.path}" />
+		<property name="verificationLink" value="${user.verification.url}" />
+	</bean>
+
+	<bean id="bidService" class="com.fourvector.apps.dabble.service.impl.BidService">
+		<property name="jobDAO" ref="jobDAO" />
+		<property name="userService" ref="userService" />
+		<property name="paymentService" ref="paymentService" />
+	</bean>
+
+	<bean id="paymentService" class="com.fourvector.apps.dabble.service.impl.PaymentService">
+		<property name="paymentDAO" ref="paymentDAO" />
+		<property name="targetEnvironment" value="${application.environment}" />
+		<property name="merchantId" value="${payment.braintree.merchantId}" />
+		<property name="publicKey" value="${payment.braintree.publicKey}" />
+		<property name="privateKey" value="${payment.braintree.privateKey}" />
+		<property name="verificationLink" value="${user.verification.url}" />
+	</bean>
+	
+	
+
+</beans>

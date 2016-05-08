@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.fourvector.apps.dabble.model.user.UserAddressModel"
+		table="user_address">
+		<id column="id_address" name="id">
+			<generator class="identity" />
+		</id>
+		<property name="status" />
+		<property name="addressLine1" />
+		<property name="addressLine2" />
+		<property name="city" />
+		<property name="state" />
+		<property name="country" />
+		<property name="zip" />
+
+		<many-to-one name="user" column="user_id" fetch="select"
+			lazy="proxy" class="com.fourvector.apps.dabble.model.user.UserModel"
+			cascade="none" />
+
+
+	</class>
+</hibernate-mapping>

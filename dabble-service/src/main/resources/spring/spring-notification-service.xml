@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:jms="http://www.springframework.org/schema/jms"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                            http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-4.0.xsd
+                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+	<context:property-placeholder location="classpath:config.properties" />
+
+	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="${jms.broker.url}" />
+	</bean>
+
+
+	<bean id="listener" class="com.fourvector.apps.dabble.jms.DabbleMessageListener">
+		<property name="emailNotifier" ref="emailNotifier" />
+		<property name="apnsNotifier" ref="apnsNotifier" />
+		<property name="templatePath" value="${email.template.location}" />
+		<property name="emailTemplates">
+			<map>
+				<!-- USER -->
+				<entry key="USER_EMAIL_VERIFICATION" value="EmailVerification.html" />
+				<entry key="USER_FORGOT_PASSWORD" value="forgotPassword.html" />
+				<entry key="PASSWORD_CHANGE_SUCCESS" value="PasswordChanged.html" />
+				<!-- JOB -->
+				<entry key="CREATE_JOB_SUCCESS" value="jobCreated.html" />
+				<entry key="CREATE_EVENT_SUCCESS" value="eventCreated.html" />
+				<!-- <entry key="RETRACT_JOB_BIDDER" value="jobRetractionBidderApproved_Seller.html" 
+					/> -->
+				<entry key="JOB_COMPLETED" value="job-completed.html" />
+				<entry key="JOB_COMPLETION_REQUESTED" value="job-completion-requested.html" />
+				<entry key="RETRACT_JOB_SELLER" value="jobRetracted_Seller.html" />
+				<entry key="RETRACT_JOB_BIDDER" value="jobRetracted_Bidder.html" />
+				<entry key="RETRACT_EVENT_SELLER" value="eventRetracted_Seller.html" />
+				<entry key="RETRACT_EVENT_BIDDER" value="eventRetracted_Bidder.html" />
+
+				<!-- BID -->
+				<entry key="BID_RETRACTED_BIDDER" value="bidRetracted_Bidder.html" />
+				<entry key="BID_RETRACTED_SELLER" value="bidRetracted_Seller.html" />
+				<entry key="BID_PLACED_BIDDER" value="bidPlaced_Bidder.html" />
+				<entry key="BID_PLACED_SELLER" value="bidPlaced_Seller.html" />
+				<!-- <entry key="RETRACT_BID_REQUESTED_SELLER" value="bidRetract_request_Seller.html" 
+					/> -->
+				<!-- <entry key="RETRACT_BID_REQUESTED_BIDDER" value="bidRetract_request_Bidder.html" 
+					/> -->
+				<entry key="ACCEPT_BID_SELLER" value="bidAccepted_Seller.html" />
+				<entry key="ACCEPT_BID_BIDDER" value="bidAccepted_Bidder.html" />
+
+				<!-- SUBSCRIPTION -->
+				<entry key="SUBSCRIBE_TO_PAY_AS_YOU_GO" value="subscription-confirmation-pay-as-you-go.html" />
+				<entry key="SUBSCRIBE_TO_MONTHLY_PAYMENT" value="subscription-confirmation-monthly.html" />
+				<!-- EVENT RELATED -->
+				<entry key="EVENT_BID_PLACED_BIDDER" value="event_bid_placed_bidder.html" />
+				<entry key="EVENT_BID_PLACED_SELLER" value="event_bid_placed_seller.html" />
+                <entry key="EVENT_ACCEPT_BID_BIDDER" value="event_accept_bid_bidder.html" />
+				<entry key="CHAT" value="chat-message.html" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="defaultDestination" ref="notification-destination" />
+		<property name="deliveryPersistent" value="true" />
+	</bean>
+
+	<bean id="notification-destination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="${jms.queue.notifications}" />
+	</bean>
+	<jms:listener-container container-type="default"
+		connection-factory="connectionFactory" acknowledge="client">
+		<jms:listener destination="${jms.queue.notifications}"
+			ref="listener" method="onMessage" />
+	</jms:listener-container>
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${email.host}" />
+		<property name="port" value="${email.port}" />
+		<property name="username" value="${email.username}" />
+		<property name="password" value="${email.password}" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
+	</bean>
+
+	<bean id="apnsNotifier"
+		class="com.fourvector.apps.dabble.notification.DabbleApplePushNotifier">
+		<property name="pathToCertificate" value="${apns.certificate.path}" />
+		<property name="certificatePassword" value="${apns.certificate.password}" />
+		<property name="targetEnvironment" value="${application.environment}" />
+		<property name="serviceEnabled" value="${apns.enabled}" />
+	</bean>
+
+	<bean id="emailNotifier"
+		class="com.fourvector.apps.dabble.notification.DabbleEmailNotifier">
+		<property name="mailSender" ref="mailSender" />
+		<property name="from" value="${email.from}" />
+		<property name="templateMessage" ref="templateMessage" />
+	</bean>
+
+</beans>

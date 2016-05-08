@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class
+		name="com.fourvector.apps.dabble.model.user.UserFavouriteCategoryModel"
+		table="user_favourite_category">
+		<id column="ID_USER_CATEGORY" name="id">
+			<generator class="identity" />
+		</id>
+
+		<property name="createdOn" column="date_added" update="false" />
+		<many-to-one name="user" fetch="join" column="user_id"
+			class="com.fourvector.apps.dabble.model.user.UserModel" cascade="none" />
+
+		<many-to-one name="category" fetch="join" column="category_id"
+			class="com.fourvector.apps.dabble.model.job.JobCategoryModel"
+			cascade="none" />
+	</class>
+</hibernate-mapping>

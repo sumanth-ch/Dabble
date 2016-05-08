@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.fourvector.apps.dabble.model.job.BidModel"
+		table="bid">
+		<id column="ID_BID" name="id">
+			<generator class="identity" />
+		</id>
+		<property name="amount" />
+		<property name="createdOn" column="date_added" update="false" />
+		<property name="lastUpdatedOn" column="date_updated" />
+		<property name="currency" />
+		<property name="comment" />
+		<property name="status" />
+
+		<many-to-one name="bidder" fetch="select" unique="true"
+			column="bidder_user_id" class="com.fourvector.apps.dabble.model.user.UserModel"
+			cascade="none" />
+
+		<many-to-one name="job" fetch="select" unique="true"
+			column="job_id" class="com.fourvector.apps.dabble.model.job.JobModel"
+			cascade="none" />
+
+	</class>
+</hibernate-mapping>

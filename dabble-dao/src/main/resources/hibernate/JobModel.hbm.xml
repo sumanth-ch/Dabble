@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.fourvector.apps.dabble.model.job.JobModel"
+		table="job">
+		<id column="ID_JOB" name="id">
+			<generator class="identity" />
+		</id>
+
+		<property name="amount" />
+		<property name="currency" />
+		<property name="jobTitle" column="job_title" />
+		<property name="description" />
+		<property name="lat" />
+		<property name="lng" />
+		<property name="status" />
+		<property name="startDate" />
+		<property name="createdOn" column="created_date" />
+		<property name="endDate" />
+		<property name="volunteers" />
+		<property name="numberOfVolunteers" />
+		<property name="workHours" />
+		<property name="isEvent" column="is_event" />
+
+
+		<property name="emailCommunication" column="email_communication" />
+		<property name="chatCommunication" column="chat_communication" />
+
+		<many-to-one name="postedBy" fetch="select" unique="true"
+			column="poster_user_id" class="com.fourvector.apps.dabble.model.user.UserModel"
+			cascade="none" />
+
+
+		<many-to-one name="posterAddress" fetch="select" unique="true"
+			column="poster_address_id" class="com.fourvector.apps.dabble.model.user.UserAddressModel"
+			cascade="none" />
+
+
+		<many-to-one name="posterEmail" fetch="select" unique="true"
+			column="poster_email_id" class="com.fourvector.apps.dabble.model.user.UserEmailModel"
+			cascade="none" />
+
+
+		<many-to-one name="posterPhone" fetch="select" unique="true"
+			column="poster_phone_id" class="com.fourvector.apps.dabble.model.user.UserPhoneModel"
+			cascade="none" />
+
+		<many-to-one name="subscriptionModel" fetch="select"
+			unique="true" column="subscription_id"
+			class="com.fourvector.apps.dabble.model.payment.SubscriptionModel"
+			cascade="none" />
+
+
+		<set name="jobDetails" fetch="select" where="status=0" batch-size="100"
+			lazy="false" cascade="save-update, persist">
+			<key column="job_id" />
+			<one-to-many class="com.fourvector.apps.dabble.model.job.JobDetailModel" />
+		</set>
+		<set name="bids" fetch="select" batch-size="100" lazy="false"
+			cascade="none">
+			<key column="job_id" />
+			<one-to-many class="com.fourvector.apps.dabble.model.job.BidModel" />
+		</set>
+		<set name="ratings" fetch="select" batch-size="100" lazy="false"
+			cascade="none">
+			<key column="job_id" />
+			<one-to-many class="com.fourvector.apps.dabble.model.user.UserRatingModel" />
+		</set>
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.fourvector.apps.dabble.model.VerificationKeyModel"
+		table="verification_keys" select-before-update="true" dynamic-update="true"
+		dynamic-insert="true">
+		<id column="id_verification_key" name="id">
+			<generator class="identity" />
+		</id>
+
+		<property name="createdOn" column="date_added" />
+		<property name="key" column="text_key" />
+		<property name="email" column="email" />
+		<property name="expiryDate" column="date_expiry" />
+
+	</class>
+</hibernate-mapping>

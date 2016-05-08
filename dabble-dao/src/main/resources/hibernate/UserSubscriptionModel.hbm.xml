@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.fourvector.apps.dabble.model.user.UserSubscriptionModel"
+		table="user_subscription">
+		<id column="id_user_subscription" name="id">
+			<generator class="identity" />
+		</id>
+
+		<property name="expiryDate" column="expiry_date" />
+		<property name="subscriptionDate" column="created_on" />
+		<property name="subscriptionReference" column="subscription_reference"/>
+		<property name="status" />
+
+		<many-to-one name="user" fetch="select" cascade="none"
+			class="com.fourvector.apps.dabble.model.user.UserModel" column="user_id" />
+
+		<many-to-one name="subscription" fetch="join"  cascade="none"
+			class="com.fourvector.apps.dabble.model.payment.SubscriptionModel"
+			column="subscription_id" />
+
+	</class>
+</hibernate-mapping>

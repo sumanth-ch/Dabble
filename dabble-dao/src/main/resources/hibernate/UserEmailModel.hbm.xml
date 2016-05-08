@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.fourvector.apps.dabble.model.user.UserEmailModel"
+		table="user_email">
+		<cache usage="read-write"/>
+		<id column="id_user_email" name="id">
+			<generator class="identity" />
+		</id>
+		<property name="email" />
+		<property name="status" />
+		<property name="createdOn" column="date_added" update="false" />
+
+		<many-to-one name="user" fetch="select" column="user_id"
+			class="com.fourvector.apps.dabble.model.user.UserModel" cascade="none" />
+
+	</class>
+</hibernate-mapping>

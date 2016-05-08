@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+                            http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+
+	<bean id="baseDAO" abstract="true">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="userDAO" class="com.fourvector.apps.dabble.dao.impl.UserDAO"
+		parent="baseDAO" />
+
+	<bean id="jobDAO" class="com.fourvector.apps.dabble.dao.impl.JobDAO"
+		parent="baseDAO">
+		<property name="mongoDAO" ref="mongoDAO" />
+	</bean>
+
+	<bean id="paymentDAO" class="com.fourvector.apps.dabble.dao.impl.PaymentDAO"
+		parent="baseDAO" />
+
+	<bean id="clientDAO" class="com.fourvector.apps.dabble.dao.impl.ClientDAO"
+		parent="baseDAO" />
+
+	<bean id="mongoDAO" class="com.fourvector.apps.dabble.dao.impl.MongoDAO">
+		<property name="mongoTemplate" ref="mongoTemplate" />
+	</bean>
+
+
+
+</beans>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.fourvector.apps.dabble.model.user.DeviceTokenModel"
+		table="device_token">
+		<id access="field" name="id" column="id_device_token">
+			<generator class="identity" />
+		</id>
+		<property name="deviceToken" column="device_token" />
+		<property name="deviceType" column="device_type" />
+
+		<many-to-one name="user" fetch="select" unique="true" access="field"
+			column="user_id" class="com.fourvector.apps.dabble.model.user.UserModel"
+			not-found="ignore" cascade="none" />
+	</class>
+</hibernate-mapping>
